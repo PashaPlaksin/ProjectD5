@@ -1,0 +1,42 @@
+{% extends 'default.html' %}
+{% load censor_filter %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+<br>
+<form method="GET">
+    {{ filter.form }} <!-- Форму от фильтров за нас сделает django. А вот кнопку, увы придётся делать самому -->
+    <input type="submit" value="Найти">
+</form>
+<a>Всего статей: {{ filter.qs |length }}</a>
+<table class="table">
+            <tr>
+                <td>
+                    Дата
+                </td>
+                <td>
+                    Автор
+                </td>
+                <td>
+                    Статья
+                </td>
+                <td>
+                    Рейтинг
+                </td>
+            </tr>
+{% for post in filter.qs %}
+<tr>
+    <td>{{ post.time_add_post |date:"D d-m-Y H:i" }}</td>
+    <td>{{ post.author.author_user }}</td>
+    <td align="left"><a href=/news/{{ post.id }}>{{ post.title_post | censor}}</a><br>
+    {{ post.post_text |truncatewords:20 }}</td>
+    <td>{{ post.author.rating }}</td>
+</tr>
+
+{% endfor %}
+</table>
+
+{% endblock content %}

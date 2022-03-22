@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+     <br>
+      <a><input type="submit" value="Выполнить"></a>
+
+</form>
+{% endblock content %}
